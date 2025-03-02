@@ -17,6 +17,7 @@ FakeCoinDetector::FakeCoinDetector() {
         std::cout << "No fake coin found." << std::endl;
 
     ShowCoins();
+    StoreData(fakeCoinIndex);
 }
 
 // DECONSTRUCTOR
@@ -107,6 +108,29 @@ void FakeCoinDetector::ShowCoins() {
         else
             std::cout << ", ";
     }
+}
+
+void FakeCoinDetector::StoreData(int index) {
+
+    std::ofstream logData;
+    logData.open("log.txt", std::ios_base::app);
+
+    logData << "Coins: [";
+
+    for (int i = 0; i < amountOfCoins; i++) {
+        logData << coins[i];
+
+        if (i == amountOfCoins - 1)
+            logData << "]";
+        else
+            logData << ", ";
+    }
+
+    if (index != -1)
+        logData << " | Fake coin is at index " << index << "\n";
+    else
+    logData << " | No fake coin in the array\n";
+
 }
 
 int FakeCoinDetector::FindFakeCoin() {    

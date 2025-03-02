@@ -4,6 +4,7 @@
 #include <random>
 #include <chrono>
 #include <limits>
+#include <fstream>
 
 class FakeCoinDetector {
 
@@ -16,6 +17,7 @@ private:
     int WeightGenerator();
     int GenerateFakeCoin();
     void ShowCoins();
+    void StoreData(int index);
 
     int PromptUser();
     void GenerateCoins();

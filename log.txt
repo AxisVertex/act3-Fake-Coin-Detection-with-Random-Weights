@@ -1,0 +1,6 @@
+Coins: [14, 14, 9, 14, 14, 14, 14, 14, 14, 14] | Fake coin is at index 2
+Coins: [14, 19, 19] | Fake coin is at index 0
+Coins: [13, 13, 8, 13, 13] | Fake coin is at index 2
+Coins: [16, 16, 11, 16, 16, 16, 16, 16, 16, 16] | Fake coin is at index 2
+Coins: [11, 11, 11, 11, 11, 6, 11, 11, 11] | Fake coin is at index 5
+Coins: [17, 17, 17, 17, 17, 17] | No fake coin in the array
