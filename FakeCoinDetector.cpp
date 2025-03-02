@@ -111,17 +111,29 @@ void FakeCoinDetector::ShowCoins() {
 
 int FakeCoinDetector::FindFakeCoin() {    
     int left = 0, right = amountOfCoins - 1;
-
     int iteration = 1;
 
     while (left < right) {
+        int numCoins = right - left + 1;
+        bool hasExtraCoin = (numCoins % 2 == 1);
+        int extraCoin = -1;
+
+        if (hasExtraCoin) {
+            // Set aside the last coin if there's an odd number of coins
+            extraCoin = right;
+            right--;
+        }
+
         int mid = left + (right - left) / 2;
+
         int leftSum = 0, rightSum = 0;
 
-        // Divide the coins into two groups and weigh them
+        // Weigh left group (left to mid)
         for (int i = left; i <= mid; i++) 
             leftSum += coins[i];
-        for (int i = mid + 1; i <= right; i++) 
+
+        // Weigh right group (mid+1 to right)
+        for (int i = mid + 1; i <= right; i++)
             rightSum += coins[i];
 
         // Show output each iteration
@@ -129,16 +141,30 @@ int FakeCoinDetector::FindFakeCoin() {
         std::cout << "[Iteration " << iteration << "]:" << std::endl;
         std::cout << "Weighing coins: (Coin " << left + 1 << " to Coin " << mid + 1 << ") VS (Coin " << mid + 2 << " to Coin " << right + 1 << ")" << std::endl;
         std::cout << "Left sum: " << leftSum << ", Right sum: " << rightSum << std::endl;
- 
+        if (hasExtraCoin) {
+            std::cout << "Extra coin set aside: Coin " << extraCoin+1 << "\n";
+        }
+
         if (leftSum < rightSum) {
             std::cout << "Fake coin is in the left group." << std::endl;
             right = mid;
-        } else if (leftSum > rightSum) {
+        } 
+        else if (leftSum > rightSum) {
             std::cout << "Fake coin is in the right group." << std::endl;
             left = mid + 1;
-        } else {
+        } 
+        else if (hasExtraCoin) {
+            // If left and right are equal, check the extra coin.
+            std::cout << "Both groups are equal. Checking if the extra coin is fake." << std::endl;
+            // check i
+            if (coins[extraCoin] < coins[extraCoin + 1])
+                return extraCoin;  // This only happens in odd-sized lists.
+            else
+                return -1;
+        } 
+        else {
+            // Shouldn't happen if there's always exactly one fake.
             std::cout << "Both groups are equal. No fake coin found in this range." << std::endl;
-            std::cout << std::endl; // space
             return -1;
         }
 
@@ -147,7 +173,6 @@ int FakeCoinDetector::FindFakeCoin() {
     std::cout << "-------------------------------------------------------------------------------------" << std::endl;
     std::cout << std::endl; // space
 
-    //show which coin is fake
+    // //show which coin is fake
     return left;
-    
 }
